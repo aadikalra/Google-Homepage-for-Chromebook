@@ -1,0 +1,555 @@
+<html>
+
+<%- include('head.ejs') %>
+
+    <style>
+        :root {
+            --body-color: 48 48 58;
+
+            --font-color: 255 255 255;
+            --highlight-color: 0 0 0;
+
+            --theme-background: 28 27 30;
+
+            --theme-light: 0 0 0;
+            --theme-medium: 46 44 53;
+            --theme-dark: 0 0 0;
+        }
+
+        body {
+            font-size: 0.74rem;
+        }
+
+        body::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background-color: rgb(var(--theme-background));
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        input,
+        select,
+        button,
+        span,
+        a,
+        p {
+            color: rgb(var(--font-color));
+            font-family: "Noto Sans", sans-serif;
+            font-size: 1rem;
+            font-weight: 400;
+            margin: 0px;
+        }
+
+        .navbar a {
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            color: rgb(var(--highlight-color));
+        }
+
+        .fancy-scrollbar::-webkit-scrollbar {
+            height: 4px;
+            width: 4px;
+        }
+
+        .fancy-scrollbar::-webkit-scrollbar-track {
+            background-color: transparent;
+        }
+
+        .fancy-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            height: 0px;
+            width: 0px;
+        }
+
+        #phone {
+            background-color: rgb(var(--theme-background));
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 8px 24px;
+            height: 851px;
+            width: 393px;
+            margin: 100px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #main-wrapper {
+            height: 100%;
+            overflow: auto;
+        }
+
+        #main {
+            height: 100%;
+        }
+
+        #content {
+            padding: 1rem;
+        }
+
+        #links-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            gap: 0.75rem;
+        }
+
+        #links-container>a {
+            color: rgb(255 255 255 / 80%);
+            font-size: 0.75rem;
+            text-decoration: none;
+        }
+
+        #links-container>a:is(:hover, :focus) {
+            text-decoration: underline;
+        }
+
+        #header-container {
+            width: 100%;
+            height: 142px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(to top, rgb(var(--theme-medium)) 10%, transparent 60%);
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+            border-bottom-left-radius: 0.2rem;
+            border-bottom-right-radius: 0.2rem;
+        }
+
+        #logo {
+            width: 90%;
+        }
+
+        #search-container {
+            display: flex;
+            gap: 0.2rem;
+            margin-top: 0.2rem;
+        }
+
+        #search-input-container>input,
+        #search-container>button {
+            background-color: rgb(var(--theme-medium));
+            color: rgb(255 255 255 / 80%);
+            font-size: 1rem;
+            border: none;
+        }
+
+        #search-container>button {
+            width: 3.5rem;
+            border-radius: 0.2rem;
+            cursor: pointer;
+        }
+
+        #search-container>#image-button {
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        #search-input-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-grow: 1;
+            background-color: rgb(var(--theme-medium));
+            padding-left: 1rem;
+            border-radius: 0.2rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        #search-input-container>img {
+            height: 1.5rem;
+        }
+
+        #search-input-container>input {
+            width: 100%;
+            height: 3.25rem;
+            background-color: transparent;
+            padding: 1rem;
+            padding-left: 0rem;
+        }
+
+        #apps-container {
+            display: grid;
+            gap: 0.2rem;
+            grid-template-columns: repeat(2, 1fr);
+            margin: 3rem 0rem;
+            max-width: 35vw;
+            margin: 0 auto;
+        }
+
+        #apps-container>a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgb(var(--theme-medium));
+            padding: 1rem 0.75rem;
+            border-radius: 0.2rem;
+            text-decoration: none;
+        }
+
+        #apps-container>a>i {
+            height: 2rem;
+            width: 2rem;
+            flex-shrink: 0;
+            font-size: 1.5rem;
+            line-height: 2rem;
+            text-align: center;
+        }
+
+        #apps-container>a>.label {
+            width: calc(100% - 2.5rem);
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+            overflow: hidden;
+        }
+
+        #apps-container>a>.label> :is(.name, .url) {
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        #apps-container>a>.label>.name {
+            font-size: 0.74rem;
+        }
+
+        #apps-container>a>.label>.url {
+            font-size: 0.7rem;
+            color: rgb(255 255 255 / 50%);
+        }
+
+        #apps-container>a:first-child {
+            border-top-left-radius: 0.5rem;
+        }
+
+        #apps-container>a:nth-child(2) {
+            color: rgb(255, 0, 0);
+            border-top-right-radius: 0.5rem;
+        }
+
+        #apps-container>a:nth-child(3) {
+            color: rgb(28, 204, 91);
+        }
+
+        #apps-container>a:nth-child(4) {
+            color: rgb(28, 147, 228);
+        }
+
+        #apps-container>a:nth-child(5) {
+            color: rgb(242, 85, 90);
+        }
+
+        #apps-container>a:nth-child(7) {
+            border-bottom-left-radius: 0.5rem;
+        }
+
+        #apps-container>a:last-child {
+            color: rgb(15, 118, 14);
+            border-bottom-right-radius: 0.5rem;
+        }
+
+        #apps-container>a {
+            transition: all 0.2s ease-in-out;
+        }
+
+        #apps-container>a:hover {
+            background-color: #3e3c47;
+        }
+
+        #discover-container {
+            width: 100%;
+        }
+
+        #discover-toggles {
+            width: 80%;
+            display: flex;
+            background-color: rgb(var(--theme-medium));
+            margin: auto;
+            border-radius: 0.5rem;
+        }
+
+        #discover-toggles>button {
+            flex-grow: 1;
+            background-color: transparent;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 0.5rem;
+            outline: none;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        #discover-toggles>button:first-child {
+            border-top-right-radius: 0.5rem;
+            border-bottom-right-radius: 0.5rem;
+            background-color: rgb(255 255 255 / 8%);
+        }
+
+        #discover-toggles>button:last-child {
+            border-top-left-radius: 0.25rem;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        #discover-feed {
+            margin-top: 0.5rem;
+        }
+
+        .discover-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            text-decoration: none;
+        }
+
+        .discover-card>img {
+            width: 100%;
+            aspect-ratio: 1.6 / 1;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border-bottom-left-radius: 0.25rem;
+            border-bottom-right-radius: 0.25rem;
+        }
+
+        .discover-card>.discover-card-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+            background-color: rgb(var(--theme-medium));
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            border-top-left-radius: 0.25rem;
+            border-top-right-radius: 0.25rem;
+        }
+
+        .discover-card>.discover-card-info>.title {
+            font-size: 0.8rem;
+        }
+
+        .discover-card>.discover-card-info>.desc {
+            font-size: 0.7rem;
+            color: rgb(255 255 255 / 50%);
+        }
+
+        @media(max-width: 500px) {
+            body {
+                overflow: auto;
+            }
+
+            #phone {
+                height: 100vh;
+                display: flex;
+                width: 100%;
+                margin: 0px auto;
+            }
+
+            #main-wrapper {
+                width: 100%;
+                flex-grow: 1;
+            }
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --theme-medium: #a6a5a5;
+            }
+
+            #apps-container>a {
+                background-color: #cdcdcd67;
+            }
+
+            #apps-container>a:hover {
+                background-color: #cdcdcd;
+            }
+
+            .name {
+                color: rgb(0, 0, 0);
+            }
+
+            .url {
+                color: rgb(71, 71, 71) !important;
+            }
+        }
+    </style>
+
+    <body>
+
+        <div class="navbar bg-base-100">
+            <div class="flex-1">
+                <ul class="menu menu-horizontal px-1 flex gap-2">
+                    <li>
+                        <a
+                            href="https://about.google/?fg=1&utm_source=google-US&utm_medium=referral&utm_campaign=hp-header">
+                            <i class="fa-solid fa-circle-info"></i>
+                            About
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="https://store.google.com/US/?utm_source=hp_header&utm_medium=google_ooo&utm_campaign=GS100042&hl=en-US">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            Store
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="flex-none">
+                <ul class="menu menu-horizontal px-1 flex gap-2">
+                    <li>
+                        <a href="https://mail.google.com">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Gmail
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://www.images.google.com/">
+                            <i class="fa-solid fa-image"></i>
+                            Images
+                        </a>
+                    </li>
+                    <li>
+                        <a style="height: 36px; padding-top: 6px; width: 36px; padding-left: 6px;">
+                            <span class="material-symbols-outlined text-1xl">apps</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="dropdown dropdown-end">
+                    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+                        <div class="w-8 rounded-full"> <!-- Changed from w-10 to w-8 -->
+                            <img alt="Tailwind CSS Navbar component"
+                                src="https://lh3.googleusercontent.com/a/ACg8ocKXGt2m0ToLOr2k-OvrdskG_eaAt3cObCKh4Y997a6KOSQutHGK=s576-c-no" />
+                        </div>
+                    </div>
+                    <ul tabindex="0"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 p-2 shadow">
+                        <li>
+                            <a class="justify-between">
+                                Profile
+                                <span class="badge">New</span>
+                            </a>
+                        </li>
+                        <li><a>Settings</a></li>
+                        <li><a>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col items-center mt-10">
+            <img class="text-center" style="width: 250px" src="https://i.redd.it/u5xicew35ps51.png" alt="google logo">
+
+            <form action="https://www.google.com/search">
+                <label class="input input-bordered flex items-center gap-2 w-[600px] border-rounded-lg">
+                    <input type="text" class="grow" name="q" />
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
+                        class="h-4 w-4 opacity-70">
+                        <path fill-rule="evenodd"
+                            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                            clip-rule="evenodd" />
+                    </svg>
+                </label>
+                <!-- <button class="btn btn-primary">DaisyUI</button> -->
+            </form>
+        </div><!--END OF CONTAINER-->
+
+        <div id="apps-container">
+            <a href="#">
+                <i class="fa-solid fa-school" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Google Classrooom</span>
+                    <span class="url">classroom.google.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">YouTube</span>
+                    <span class="url">youtube.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-spotify" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Spotify</span>
+                    <span class="url">spotify.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-twitter" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Twitter</span>
+                    <span class="url">twitter.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-airbnb" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Airbnb</span>
+                    <span class="url">airbnb.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-wikipedia-w" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Wikipedia</span>
+                    <span class="url">wikipedia.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-github" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Github</span>
+                    <span class="url">github.com</span>
+                </div>
+            </a>
+            <a href="#">
+                <i class="fa-brands fa-xbox" aria-hidden="true"></i>
+                <div class="label">
+                    <span class="name">Xbox</span>
+                    <span class="url">xbox.com</span>
+                </div>
+            </a>
+        </div>
+
+        <footer class="bg-base-200 p-2 fixed bottom-0 w-full text-sm">
+            <div class="mx-auto flex justify-between items-center pl-10 pr-10">
+                <ul class="flex gap-4">
+                    <li><a href="#" class="link link-hover">Advertising</a></li>
+                    <li><a href="#" class="link link-hover">Business</a></li>
+                    <li><a href="#" class="link link-hover">How Search works</a></li>
+                </ul>
+                <!-- Middle, flex-grow ensures it takes up remaining space and centers the content -->
+                <div class="flex-grow text-center">
+                    <a href="#" class="flex items-center justify-center gap-1">
+                        <i class="fa-solid fa-leaf text-green-600 mr-2"></i>
+                        Our third decade of climate action: join us
+                    </a>
+                </div>
+                <ul class="flex gap-4">
+                    <li><a href="#" class="link link-hover">Privacy</a></li>
+                    <li><a href="#" class="link link-hover">Terms</a></li>
+                    <li><a href="#" class="link link-hover">Settings</a></li>
+                </ul>
+            </div>
+        </footer>
+
+
+    </body>
+
+</html>
