@@ -57,6 +57,22 @@
             font-size: 0.9rem;
         }
 
+        .material-symbols-outlined {
+            color: rgb(var(--font-color)) !important;
+        }
+
+        @media (prefers-color-scheme: light) {
+            .material-symbols-outlined {
+                color: black !important;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .material-symbols-outlined {
+                color: oklch(0.746477 0.0216 264.436) !important;
+            }
+        }
+
         .highlight {
             color: rgb(var(--highlight-color));
         }
@@ -189,7 +205,7 @@
             gap: 0.2rem;
             grid-template-columns: repeat(2, 1fr);
             margin: 3rem 0rem;
-            max-width: 35vw;
+            max-width: 50vw;
             margin: 0 auto;
         }
 
@@ -233,7 +249,6 @@
 
         #apps-container>a>.label>.url {
             font-size: 0.7rem;
-            color: rgb(255 255 255 / 50%);
         }
 
         #apps-container>a:first-child {
@@ -241,20 +256,7 @@
         }
 
         #apps-container>a:nth-child(2) {
-            color: rgb(255, 0, 0);
             border-top-right-radius: 0.5rem;
-        }
-
-        #apps-container>a:nth-child(3) {
-            color: rgb(28, 204, 91);
-        }
-
-        #apps-container>a:nth-child(4) {
-            color: rgb(28, 147, 228);
-        }
-
-        #apps-container>a:nth-child(5) {
-            color: rgb(242, 85, 90);
         }
 
         #apps-container>a:nth-child(7) {
@@ -262,7 +264,6 @@
         }
 
         #apps-container>a:last-child {
-            color: rgb(15, 118, 14);
             border-bottom-right-radius: 0.5rem;
         }
 
@@ -432,7 +433,7 @@
                 </ul>
                 <div class="dropdown dropdown-end">
                     <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-                        <div class="w-8 rounded-full"> <!-- Changed from w-10 to w-8 -->
+                        <div class="w-8 rounded-full">
                             <img alt="Tailwind CSS Navbar component"
                                 src="https://lh3.googleusercontent.com/a/ACg8ocKXGt2m0ToLOr2k-OvrdskG_eaAt3cObCKh4Y997a6KOSQutHGK=s576-c-no" />
                         </div>
@@ -455,7 +456,7 @@
             <img class="text-center" style="width: 250px" src="https://i.redd.it/u5xicew35ps51.png" alt="google logo">
 
             <form action="https://www.google.com/search">
-                <label class="input input-bordered flex items-center gap-2 w-[600px] border-rounded-lg">
+                <label class="input input-bordered flex items-center gap-2 border-rounded-lg" style="width: 50vw;">
                     <input type="text" class="grow" name="q" />
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor"
                         class="h-4 w-4 opacity-70">
@@ -464,92 +465,20 @@
                             clip-rule="evenodd" />
                     </svg>
                 </label>
-                <!-- <button class="btn btn-primary">DaisyUI</button> -->
             </form>
-        </div><!--END OF CONTAINER-->
-
-        <div id="apps-container">
-            <a href="#">
-                <i class="fa-solid fa-school" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Google Classrooom</span>
-                    <span class="url">classroom.google.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-youtube" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">YouTube</span>
-                    <span class="url">youtube.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-spotify" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Spotify</span>
-                    <span class="url">spotify.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-twitter" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Twitter</span>
-                    <span class="url">twitter.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-airbnb" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Airbnb</span>
-                    <span class="url">airbnb.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-wikipedia-w" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Wikipedia</span>
-                    <span class="url">wikipedia.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-github" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Github</span>
-                    <span class="url">github.com</span>
-                </div>
-            </a>
-            <a href="#">
-                <i class="fa-brands fa-xbox" aria-hidden="true"></i>
-                <div class="label">
-                    <span class="name">Xbox</span>
-                    <span class="url">xbox.com</span>
-                </div>
-            </a>
         </div>
 
-        <footer class="bg-base-200 p-2 fixed bottom-0 w-full text-sm">
-            <div class="mx-auto flex justify-between items-center pl-10 pr-10">
-                <ul class="flex gap-4">
-                    <li><a href="#" class="link link-hover">Advertising</a></li>
-                    <li><a href="#" class="link link-hover">Business</a></li>
-                    <li><a href="#" class="link link-hover">How Search works</a></li>
-                </ul>
-                <!-- Middle, flex-grow ensures it takes up remaining space and centers the content -->
-                <div class="flex-grow text-center">
-                    <a href="#" class="flex items-center justify-center gap-1">
-                        <i class="fa-solid fa-leaf text-green-600 mr-2"></i>
-                        Our third decade of climate action: join us
-                    </a>
-                </div>
-                <ul class="flex gap-4">
-                    <li><a href="#" class="link link-hover">Privacy</a></li>
-                    <li><a href="#" class="link link-hover">Terms</a></li>
-                    <li><a href="#" class="link link-hover">Settings</a></li>
-                </ul>
-            </div>
-        </footer>
-
-
+        <div id="apps-container">
+            <% for(let part of data) { %>
+                <a href="<%= part.hrf %>">
+                    <i class="<%= part.icon %>" aria-hidden="true" style="color: <%= part.color %>"></i>
+                    <div class="label">
+                        <span class="name"><%= part.name %></span>
+                        <span class="url"><%= part.url %></span>
+                    </div>
+                </a>
+            <% } %>
+        </div>
     </body>
 
 </html>
